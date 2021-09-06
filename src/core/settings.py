@@ -18,7 +18,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'emby_serializer',
+    'db_serializer',
 ]
 
 MIDDLEWARE = [
