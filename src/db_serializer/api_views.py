@@ -1,4 +1,4 @@
-from rest_framework import generics
+from rest_framework import generics, filters
 
 from .models import EmbyMediaItem
 from .serializers import EmbyMovieSerializer, EmbySerieSerializer, EmbyEpisodeSerializer
@@ -7,9 +7,12 @@ from .serializers import EmbyMovieSerializer, EmbySerieSerializer, EmbyEpisodeSe
 # TODO: Improve filtering on all views
 class EmbyMovieView(generics.ListAPIView):
     serializer_class = EmbyMovieSerializer
+    filter_backends = [filters.OrderingFilter]
+    ordering_fields = ['id', 'name']
+    ordering = ['id']
 
     def get_queryset(self):
-        queryset = EmbyMediaItem.objects.using('emby').filter(type=5).order_by('id')
+        queryset = EmbyMediaItem.objects.using('emby').filter(type=5)
         tmdb_id = self.request.query_params.get('tmdb')
         imdb_id = self.request.query_params.get('imdb')
 
@@ -23,9 +26,12 @@ class EmbyMovieView(generics.ListAPIView):
 
 class EmbySeriesView(generics.ListAPIView):
     serializer_class = EmbySerieSerializer
+    filter_backends = [filters.OrderingFilter]
+    ordering_fields = ['id', 'name']
+    ordering = ['id']
 
     def get_queryset(self):
-        queryset = EmbyMediaItem.objects.using('emby').filter(type=6).order_by('id')
+        queryset = EmbyMediaItem.objects.using('emby').filter(type=6)
         imdb_id = self.request.query_params.get('imdb')
         tmdb_id = self.request.query_params.get('tmdb')
         tvdb_id = self.request.query_params.get('tvdb')
@@ -42,9 +48,12 @@ class EmbySeriesView(generics.ListAPIView):
 
 class EmbyEpisodesView(generics.ListAPIView):
     serializer_class = EmbyEpisodeSerializer
+    filter_backends = [filters.OrderingFilter]
+    ordering_fields = ['id', 'name']
+    ordering = ['id']
 
     def get_queryset(self):
-        queryset = EmbyMediaItem.objects.using('emby').filter(type=8).order_by('id')
+        queryset = EmbyMediaItem.objects.using('emby').filter(type=8)
         tmdb_id = self.request.query_params.get('tmdb')
         tvdb_id = self.request.query_params.get('tvdb')
 
