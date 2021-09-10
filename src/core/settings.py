@@ -58,7 +58,7 @@ DATABASES = {
     },
     'emby': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'emby-data' / 'emby' / 'library.db',
+        'NAME': BASE_DIR / 'data' / 'emby' / 'library.db',
     },
 }
 
