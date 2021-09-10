@@ -54,11 +54,11 @@ WSGI_APPLICATION = 'core.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': BASE_DIR / 'data' / 'app' / 'db.sqlite3',
     },
     'emby': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'library.db',
+        'NAME': BASE_DIR / 'emby-data' / 'emby' / 'library.db',
     },
 }
 

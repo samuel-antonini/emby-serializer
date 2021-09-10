@@ -3,9 +3,7 @@
 *.pyc
 __pycache__/
 local_settings.py
-*.sqlite3
-*.db
-*.db-shm
-*.db-wal
+*sqlite3
+*db*
 media
 docker-compose.yaml
