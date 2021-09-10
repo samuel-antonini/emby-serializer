@@ -59,6 +59,9 @@ DATABASES = {
     'emby': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'data' / 'emby' / 'library.db',
+        'OPTIONS': {
+            'timeout': 20,  # in seconds
+        }
     },
 }
 
