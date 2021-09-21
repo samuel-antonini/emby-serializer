@@ -1,7 +1,16 @@
+import subprocess
+
+from django.conf import settings
 from rest_framework import generics, filters
 
 from .models import EmbyMediaItem
 from .serializers import EmbyMovieSerializer, EmbySerieSerializer, EmbyEpisodeSerializer
+
+
+def copy_emby_database():
+    base_dir = settings.BASE_DIR
+    copy_database = f'cp {base_dir}/data/emby/library.db /tmp/'
+    return subprocess.check_output(copy_database, shell=True, stderr=subprocess.STDOUT)
 
 
 # TODO: Improve filtering on all views
@@ -10,6 +19,10 @@ class EmbyMovieView(generics.ListAPIView):
     filter_backends = [filters.OrderingFilter]
     ordering_fields = ['id', 'name']
     ordering = ['id']
+
+    def get(self, request, *args, **kwargs):
+        copy_emby_database()
+        return super().get(request, *args, **kwargs)
 
     def get_queryset(self):
         queryset = EmbyMediaItem.objects.using('emby').filter(type=5)
@@ -29,6 +42,10 @@ class EmbySeriesView(generics.ListAPIView):
     filter_backends = [filters.OrderingFilter]
     ordering_fields = ['id', 'name']
     ordering = ['id']
+
+    def get(self, request, *args, **kwargs):
+        copy_emby_database()
+        return super().get(request, *args, **kwargs)
 
     def get_queryset(self):
         queryset = EmbyMediaItem.objects.using('emby').filter(type=6)
@@ -51,6 +68,10 @@ class EmbyEpisodesView(generics.ListAPIView):
     filter_backends = [filters.OrderingFilter]
     ordering_fields = ['id', 'name']
     ordering = ['id']
+
+    def get(self, request, *args, **kwargs):
+        copy_emby_database()
+        return super().get(request, *args, **kwargs)
 
     def get_queryset(self):
         queryset = EmbyMediaItem.objects.using('emby').filter(type=8)
