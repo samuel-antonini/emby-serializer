@@ -1,6 +1,32 @@
 from django.db import models
 
 
+class EmbyMediaGenre(models.Model):
+    id = models.IntegerField('Id', primary_key=True, db_column='Id')
+    type = models.IntegerField('Type', blank=True, null=True)
+    name = models.CharField(max_length=250, db_column='Name', blank=True, null=True)
+
+    class Meta:
+        db_table = 'MediaItems'
+        managed = False
+
+    def __str__(self):
+        return self.id
+
+
+class EmbyItemLink(models.Model):
+    item_id = models.OneToOneField('EmbyMediaItem', on_delete=models.CASCADE, db_column='ItemId', primary_key=True)
+    type = models.IntegerField('Type', blank=True, null=True)
+    linked_id = models.ForeignKey('EmbyMediaGenre', on_delete=models.CASCADE, db_column='LinkedId')
+
+    class Meta:
+        db_table = 'ItemLinks'
+        managed = False
+
+    def __str__(self):
+        return self.item_id
+
+
 class EmbyMediaItem(models.Model):
     id = models.IntegerField('Id', primary_key=True, db_column='Id')
     guid = models.CharField('Guid', max_length=500, blank=True, null=True)
@@ -23,7 +49,6 @@ class EmbyMediaItem(models.Model):
     parent_index_number = models.IntegerField(db_column='ParentIndexNumber', blank=True, null=True)
     premiere_date = models.CharField(max_length=25, db_column='PremiereDate', blank=True, null=True)
     production_year = models.IntegerField(db_column='ProductionYear', blank=True, null=True)
-    genres = models.CharField(max_length=100, db_column='Genres', blank=True, null=True)
     sort_name = models.CharField(max_length=250, db_column='SortName', blank=True, null=True)
     forced_sort_name = models.CharField(max_length=250, db_column='ForcedSortName', blank=True, null=True)
     runtime_ticks = models.BigIntegerField(db_column='RunTimeTicks', blank=True, null=True)
@@ -89,6 +114,11 @@ class EmbyMediaItem(models.Model):
 
     def __str__(self):
         return self.id
+
+    def linked_genres(self):
+        item_links = EmbyItemLink.objects.using('emby').filter(item_id=self).filter(type=2)
+        lista = [item.linked_id_id for item in item_links]
+        return EmbyMediaGenre.objects.using('emby').filter(id__in=lista)
 
 
 class EmbyMediaStream(models.Model):

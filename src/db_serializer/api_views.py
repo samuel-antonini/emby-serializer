@@ -3,8 +3,8 @@ import subprocess
 from django.conf import settings
 from rest_framework import generics, filters
 
-from .models import EmbyMediaItem
-from .serializers import EmbyMovieSerializer, EmbySerieSerializer, EmbyEpisodeSerializer
+from .models import EmbyMediaItem, EmbyMediaGenre
+from .serializers import EmbyMovieSerializer, EmbySerieSerializer, EmbyEpisodeSerializer, EmbyMediaGenreSerializer
 
 
 def copy_emby_database():
@@ -84,3 +84,14 @@ class EmbyEpisodesView(generics.ListAPIView):
             queryset = queryset.filter(provider_ids__contains=f'tvdb={tvdb_id}')
 
         return queryset
+
+
+class EmbyGenreView(generics.ListAPIView):
+    serializer_class = EmbyMediaGenreSerializer
+    filter_backends = [filters.OrderingFilter]
+    ordering = ['id']
+    queryset = EmbyMediaGenre.objects.using('emby').filter(type=21)
+
+    def get(self, request, *args, **kwargs):
+        copy_emby_database()
+        return super().get(request, *args, **kwargs)
