@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import EmbyMediaItem, EmbyMediaStream, EmbyMediaGenre
+from .models import EmbyMediaItem, EmbyMediaStream, EmbyMediaLinkedItem
 
 
 class EmbyMediaStreamSerializer(serializers.ModelSerializer):
@@ -9,15 +9,15 @@ class EmbyMediaStreamSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class EmbyMediaGenreSerializer(serializers.ModelSerializer):
+class EmbyMediaLinkedItemSerializer(serializers.ModelSerializer):
     class Meta:
-        model = EmbyMediaGenre
+        model = EmbyMediaLinkedItem
         fields = ['id', 'name']
 
 
 class EmbyMovieSerializer(serializers.ModelSerializer):
     media_streams = EmbyMediaStreamSerializer(source="embymediastream_set", many=True)
-    genres = EmbyMediaGenreSerializer(read_only=True, many=True, source='linked_genres')
+    genres = EmbyMediaLinkedItemSerializer(read_only=True, many=True, source='linked_genres')
 
     class Meta:
         model = EmbyMediaItem
@@ -27,7 +27,7 @@ class EmbyMovieSerializer(serializers.ModelSerializer):
 
 
 class EmbySerieSerializer(serializers.ModelSerializer):
-    genres = EmbyMediaGenreSerializer(read_only=True, many=True, source='linked_genres')
+    genres = EmbyMediaLinkedItemSerializer(read_only=True, many=True, source='linked_genres')
 
     class Meta:
         model = EmbyMediaItem

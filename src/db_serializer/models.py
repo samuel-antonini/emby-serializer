@@ -1,7 +1,7 @@
 from django.db import models
 
 
-class EmbyMediaGenre(models.Model):
+class EmbyMediaLinkedItem(models.Model):
     id = models.IntegerField('Id', primary_key=True, db_column='Id')
     type = models.IntegerField('Type', blank=True, null=True)
     name = models.CharField(max_length=250, db_column='Name', blank=True, null=True)
@@ -17,7 +17,7 @@ class EmbyMediaGenre(models.Model):
 class EmbyItemLink(models.Model):
     item_id = models.OneToOneField('EmbyMediaItem', on_delete=models.CASCADE, db_column='ItemId', primary_key=True)
     type = models.IntegerField('Type', blank=True, null=True)
-    linked_id = models.ForeignKey('EmbyMediaGenre', on_delete=models.CASCADE, db_column='LinkedId')
+    linked_id = models.ForeignKey('EmbyMediaLinkedItem', on_delete=models.CASCADE, db_column='LinkedId')
 
     class Meta:
         db_table = 'ItemLinks'
@@ -118,7 +118,7 @@ class EmbyMediaItem(models.Model):
     def linked_genres(self):
         item_links = EmbyItemLink.objects.using('emby').filter(item_id=self).filter(type=2)
         lista = [item.linked_id_id for item in item_links]
-        return EmbyMediaGenre.objects.using('emby').filter(id__in=lista)
+        return EmbyMediaLinkedItem.objects.using('emby').filter(id__in=lista)
 
 
 class EmbyMediaStream(models.Model):
