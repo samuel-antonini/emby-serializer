@@ -64,7 +64,6 @@ class EmbyMediaItem(models.Model):
     date_last_saved = models.CharField(max_length=25, db_column='DateLastSaved', blank=True, null=True)
     is_in_mixed_folder = models.BooleanField(db_column='IsInMixedFolder', blank=True, null=True)
     locked_fields = models.CharField(max_length=100, db_column='LockedFields', blank=True, null=True)
-    studios = models.CharField(max_length=100, db_column='Studios', blank=True, null=True)
     tags = models.CharField(max_length=100, db_column='Tags', blank=True, null=True)
     is_folder = models.BooleanField(db_column='IsFolder', blank=True, null=True)
     inherited_parental_rating = models.IntegerField(db_column='InheritedParentalRatingValue', blank=True, null=True)
@@ -117,8 +116,13 @@ class EmbyMediaItem(models.Model):
 
     def linked_genres(self):
         item_links = EmbyItemLink.objects.using('emby').filter(item_id=self).filter(type=2)
-        lista = [item.linked_id_id for item in item_links]
-        return EmbyMediaLinkedItem.objects.using('emby').filter(id__in=lista)
+        id_list = [item.linked_id_id for item in item_links]
+        return EmbyMediaLinkedItem.objects.using('emby').filter(id__in=id_list)
+
+    def linked_studios(self):
+        item_links = EmbyItemLink.objects.using('emby').filter(item_id=self).filter(type=3)
+        id_list = [item.linked_id_id for item in item_links]
+        return EmbyMediaLinkedItem.objects.using('emby').filter(id__in=id_list)
 
 
 class EmbyMediaStream(models.Model):
