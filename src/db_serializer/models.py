@@ -1,6 +1,12 @@
 from django.db import models
 
 
+def get_linked_items_by_type(media_item, item_type):
+    linked_items = EmbyItemLink.objects.using('emby').filter(item_id=media_item).filter(type=item_type)
+    id_list = [item.linked_id_id for item in linked_items]
+    return EmbyMediaLinkedItem.objects.using('emby').filter(id__in=id_list)
+
+
 class EmbyMediaLinkedItem(models.Model):
     id = models.IntegerField('Id', primary_key=True, db_column='Id')
     type = models.IntegerField('Type', blank=True, null=True)
@@ -115,14 +121,10 @@ class EmbyMediaItem(models.Model):
         return self.id
 
     def linked_genres(self):
-        item_links = EmbyItemLink.objects.using('emby').filter(item_id=self).filter(type=2)
-        id_list = [item.linked_id_id for item in item_links]
-        return EmbyMediaLinkedItem.objects.using('emby').filter(id__in=id_list)
+        return get_linked_items_by_type(self, 2)
 
     def linked_studios(self):
-        item_links = EmbyItemLink.objects.using('emby').filter(item_id=self).filter(type=3)
-        id_list = [item.linked_id_id for item in item_links]
-        return EmbyMediaLinkedItem.objects.using('emby').filter(id__in=id_list)
+        return get_linked_items_by_type(self, 3)
 
 
 class EmbyMediaStream(models.Model):
