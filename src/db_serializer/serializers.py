@@ -24,7 +24,8 @@ class EmbyMovieSerializer(serializers.ModelSerializer):
         model = EmbyMediaItem
         fields = 'id', 'original_title', 'name', 'production_year', 'genres', 'studios', 'overview', 'community_rating', \
                  'official_rating', 'critic_rating', 'provider_ids', 'data', 'images', 'filename', 'path', 'container', \
-                 'width', 'height', 'size', 'total_bitrate', 'date_created', 'date_modified', 'media_streams'
+                 'width', 'height', 'size', 'runtime_ticks', 'total_bitrate', 'date_created', 'date_modified', \
+                 'media_streams'
 
 
 class EmbySerieSerializer(serializers.ModelSerializer):
@@ -45,4 +46,5 @@ class EmbyEpisodeSerializer(serializers.ModelSerializer):
         model = EmbyMediaItem
         fields = 'id', 'original_title', 'name', 'production_year', 'overview', 'community_rating', \
                  'official_rating', 'critic_rating', 'provider_ids', 'data', 'images', 'filename', 'path', 'container', \
-                 'width', 'height', 'size', 'total_bitrate', 'date_created', 'date_modified', 'media_streams'
+                 'width', 'height', 'size', 'runtime_ticks', 'total_bitrate', 'date_created', 'date_modified', \
+                 'media_streams'
