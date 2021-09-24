@@ -40,7 +40,7 @@ docker-compose up -d
 Library data can be retrieved using the follwing endpoints:
 
 * `/embymovies/`
-* `/embyseries/`
+* `/embytvshows/`
 * `/embyepisodes/`
 
 ### Ordering

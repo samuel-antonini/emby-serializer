@@ -4,7 +4,7 @@ from django.conf import settings
 from rest_framework import generics, filters
 
 from .models import EmbyMediaItem
-from .serializers import EmbyMovieSerializer, EmbySerieSerializer, EmbyEpisodeSerializer
+from .serializers import EmbyMovieSerializer, EmbyTvShowSerializer, EmbyEpisodeSerializer
 
 
 def copy_emby_database():
@@ -37,8 +37,8 @@ class EmbyMovieView(generics.ListAPIView):
         return queryset
 
 
-class EmbySeriesView(generics.ListAPIView):
-    serializer_class = EmbySerieSerializer
+class EmbyTvShowView(generics.ListAPIView):
+    serializer_class = EmbyTvShowSerializer
     filter_backends = [filters.OrderingFilter]
     ordering_fields = ['id', 'name']
     ordering = ['id']

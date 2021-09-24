@@ -28,7 +28,7 @@ class EmbyMovieSerializer(serializers.ModelSerializer):
                  'media_streams'
 
 
-class EmbySerieSerializer(serializers.ModelSerializer):
+class EmbyTvShowSerializer(serializers.ModelSerializer):
     genres = EmbyMediaLinkedItemSerializer(read_only=True, many=True, source='linked_genres')
     studios = EmbyMediaLinkedItemSerializer(read_only=True, many=True, source='linked_studios')
 
