@@ -1,6 +1,12 @@
 from django.db import models
 
 
+def get_linked_items_by_type(media_item, item_type):
+    linked_items = EmbyItemLink.objects.using('emby').filter(item_id=media_item).filter(type=item_type)
+    id_list = [item.linked_id_id for item in linked_items]
+    return EmbyMediaLinkedItem.objects.using('emby').filter(id__in=id_list)
+
+
 class EmbyMediaLinkedItem(models.Model):
     id = models.IntegerField('Id', primary_key=True, db_column='Id')
     type = models.IntegerField('Type', blank=True, null=True)
@@ -64,7 +70,6 @@ class EmbyMediaItem(models.Model):
     date_last_saved = models.CharField(max_length=25, db_column='DateLastSaved', blank=True, null=True)
     is_in_mixed_folder = models.BooleanField(db_column='IsInMixedFolder', blank=True, null=True)
     locked_fields = models.CharField(max_length=100, db_column='LockedFields', blank=True, null=True)
-    studios = models.CharField(max_length=100, db_column='Studios', blank=True, null=True)
     tags = models.CharField(max_length=100, db_column='Tags', blank=True, null=True)
     is_folder = models.BooleanField(db_column='IsFolder', blank=True, null=True)
     inherited_parental_rating = models.IntegerField(db_column='InheritedParentalRatingValue', blank=True, null=True)
@@ -116,9 +121,10 @@ class EmbyMediaItem(models.Model):
         return self.id
 
     def linked_genres(self):
-        item_links = EmbyItemLink.objects.using('emby').filter(item_id=self).filter(type=2)
-        lista = [item.linked_id_id for item in item_links]
-        return EmbyMediaLinkedItem.objects.using('emby').filter(id__in=lista)
+        return get_linked_items_by_type(self, 2)
+
+    def linked_studios(self):
+        return get_linked_items_by_type(self, 3)
 
 
 class EmbyMediaStream(models.Model):

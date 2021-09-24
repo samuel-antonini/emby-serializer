@@ -40,7 +40,7 @@ docker-compose up -d
 Library data can be retrieved using the follwing endpoints:
 
 * `/embymovies/`
-* `/embyseries/`
+* `/embytvshows/`
 * `/embyepisodes/`
 
 ### Ordering
@@ -57,5 +57,5 @@ It is possible to filter results by `IMDB`, `TVDB` or `TMDB` ids using the follo
 
 ### Performance
 
-Due to the fact that Emby server acccess its database in exclusive mode, the serializer must always work with a
+Due to the fact that Emby server access its database in exclusive mode, the serializer must always work with a
 temporary copy of the db file, which can impact performance and response times depending on the size of the database.
