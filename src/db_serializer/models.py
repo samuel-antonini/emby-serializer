@@ -120,6 +120,16 @@ class EmbyMediaItem(models.Model):
     def __str__(self):
         return self.id
 
+    def provider_ids_dict(self):
+        providers_dict = None
+
+        if self.provider_ids:
+            providers_str = self.provider_ids.split("|")
+            providers_list = [item.split("=") for item in providers_str]
+            providers_dict = {item[0]: item[1] for item in providers_list}
+
+        return providers_dict
+
     def linked_genres(self):
         return get_linked_items_by_type(self, 2)
 
