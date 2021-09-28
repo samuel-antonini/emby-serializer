@@ -1,6 +1,7 @@
-![](https://img.shields.io/badge/Python-3.8+-blue)
-![](https://img.shields.io/badge/Django-3.2-blue)
-![](https://img.shields.io/badge/djangorestframework-3.12-blue)
+![](https://img.shields.io/badge/embyserver-4.6.4-darkcyan)
+![](https://img.shields.io/badge/Django-3.2-darkcyan)
+![](https://img.shields.io/badge/Python-3.8+-darkcyan)
+![](https://img.shields.io/badge/djangorestframework-3.12-darkcyan)
 
 ### About
 
