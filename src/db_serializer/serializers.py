@@ -47,7 +47,7 @@ class EmbyEpisodeSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = EmbyMediaItem
-        fields = 'id', 'original_title', 'name', 'production_year', 'overview', 'community_rating', \
+        fields = 'id', 'original_title', 'name', 'production_year', 'series_name', 'overview', 'community_rating', \
                  'official_rating', 'critic_rating', 'providers', 'data', 'images', 'filename', 'path', 'container', \
                  'width', 'height', 'size', 'runtime_ticks', 'total_bitrate', 'date_created', 'date_modified', \
                  'media_streams'
