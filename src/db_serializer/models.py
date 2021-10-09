@@ -1,3 +1,5 @@
+import datetime
+
 from django.db import models
 
 
@@ -181,3 +183,14 @@ class EmbyMediaStream(models.Model):
 
     def __str__(self):
         return self.item_id
+
+
+class EmbyLastDatabaseCheck(models.Model):
+    last_check = models.DateTimeField('Last time checked', auto_now_add=True)
+
+    def __str__(self):
+        return self.last_check
+
+    @property
+    def threshold(self):
+        return self.last_check + datetime.timedelta(minutes=5)
