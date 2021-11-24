@@ -1,4 +1,4 @@
-![](https://img.shields.io/badge/embyserver-4.6.4-darkcyan)
+![](https://img.shields.io/badge/embyserver-4.6.6-darkcyan)
 ![](https://img.shields.io/badge/Django-3.2-darkcyan)
 ![](https://img.shields.io/badge/Python-3.8+-darkcyan)
 ![](https://img.shields.io/badge/djangorestframework-3.12-darkcyan)

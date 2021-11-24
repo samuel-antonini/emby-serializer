@@ -24,7 +24,7 @@ class EmbyMovieSerializer(serializers.ModelSerializer):
     class Meta:
         model = EmbyMediaItem
         fields = 'id', 'original_title', 'name', 'production_year', 'genres', 'studios', 'overview', 'community_rating', \
-                 'official_rating', 'critic_rating', 'providers', 'data', 'images', 'filename', 'path', 'container', \
+                 'official_rating', 'critic_rating', 'providers', 'images', 'filename', 'path', 'container', \
                  'width', 'height', 'size', 'runtime_ticks', 'total_bitrate', 'date_created', 'date_modified', \
                  'media_streams'
 
@@ -37,7 +37,7 @@ class EmbyTvShowSerializer(serializers.ModelSerializer):
     class Meta:
         model = EmbyMediaItem
         fields = 'id', 'original_title', 'name', 'production_year', 'genres', 'studios', 'overview', \
-                 'community_rating', 'official_rating', 'critic_rating', 'providers', 'data', 'images', 'path', \
+                 'community_rating', 'official_rating', 'critic_rating', 'providers', 'images', 'path', \
                  'date_created', 'date_modified'
 
 
@@ -50,6 +50,6 @@ class EmbyEpisodeSerializer(serializers.ModelSerializer):
     class Meta:
         model = EmbyMediaItem
         fields = 'id', 'original_title', 'production_year', 'series_name', 'season', 'episode', 'name', \
-                 'overview', 'community_rating', 'official_rating', 'critic_rating', 'providers', 'data', 'images', \
+                 'overview', 'community_rating', 'official_rating', 'critic_rating', 'providers', 'images', \
                  'filename', 'path', 'container', 'width', 'height', 'size', 'runtime_ticks', 'total_bitrate', \
                  'date_created', 'date_modified', 'media_streams'
