@@ -20,23 +20,25 @@ class EmbyMovieSerializer(serializers.ModelSerializer):
     genres = EmbyMediaLinkedItemSerializer(read_only=True, many=True, source='linked_genres')
     studios = EmbyMediaLinkedItemSerializer(read_only=True, many=True, source='linked_studios')
     providers = serializers.DictField(source='provider_ids_dict')
+    library = serializers.ReadOnlyField(source='linked_library')
 
     class Meta:
         model = EmbyMediaItem
-        fields = 'id', 'original_title', 'name', 'production_year', 'genres', 'studios', 'overview', 'community_rating', \
-                 'official_rating', 'critic_rating', 'providers', 'images', 'filename', 'path', 'container', \
-                 'width', 'height', 'size', 'runtime_ticks', 'total_bitrate', 'date_created', 'date_modified', \
-                 'media_streams'
+        fields = 'id', 'original_title', 'name', 'production_year', 'library', 'genres', 'studios', 'overview', \
+                 'community_rating', 'official_rating', 'critic_rating', 'providers', 'images', 'filename', 'path', \
+                 'container', 'width', 'height', 'size', 'runtime_ticks', 'total_bitrate', 'date_created', \
+                 'date_modified', 'media_streams'
 
 
 class EmbyTvShowSerializer(serializers.ModelSerializer):
     genres = EmbyMediaLinkedItemSerializer(read_only=True, many=True, source='linked_genres')
     studios = EmbyMediaLinkedItemSerializer(read_only=True, many=True, source='linked_studios')
     providers = serializers.DictField(source='provider_ids_dict')
+    library = serializers.ReadOnlyField(source='linked_library')
 
     class Meta:
         model = EmbyMediaItem
-        fields = 'id', 'original_title', 'name', 'production_year', 'genres', 'studios', 'overview', \
+        fields = 'id', 'original_title', 'name', 'production_year', 'library', 'genres', 'studios', 'overview', \
                  'community_rating', 'official_rating', 'critic_rating', 'providers', 'images', 'path', \
                  'date_created', 'date_modified'
 
@@ -46,10 +48,11 @@ class EmbyEpisodeSerializer(serializers.ModelSerializer):
     providers = serializers.DictField(source='provider_ids_dict')
     season = serializers.ReadOnlyField(source='parent_index_number')
     episode = serializers.ReadOnlyField(source='index_number')
+    library = serializers.ReadOnlyField(source='linked_library')
 
     class Meta:
         model = EmbyMediaItem
-        fields = 'id', 'original_title', 'production_year', 'series_name', 'season', 'episode', 'name', \
+        fields = 'id', 'original_title', 'production_year', 'series_name', 'season', 'episode', 'name', 'library', \
                  'overview', 'community_rating', 'official_rating', 'critic_rating', 'providers', 'images', \
                  'filename', 'path', 'container', 'width', 'height', 'size', 'runtime_ticks', 'total_bitrate', \
                  'date_created', 'date_modified', 'media_streams'

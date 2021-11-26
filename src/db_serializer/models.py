@@ -128,6 +128,10 @@ class EmbyMediaItem(models.Model):
 
         return providers_dict
 
+    def linked_library(self):
+        parent_folder = EmbyMediaItem.objects.using('emby').get(id=self.top_parent_id)
+        return parent_folder.name
+
     def linked_genres(self):
         return get_linked_items_by_type(self, 2)
 
